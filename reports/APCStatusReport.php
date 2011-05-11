@@ -51,15 +51,15 @@ class APCStatusReport extends ServerHealthReport {
 		$number_files = $cache[ 'num_entries' ];
 		$size_files = $this->bsize( $cache[ 'mem_size' ] );
 
-		$dataObjectSet->push( new ArrayData( array( 'Name' => 'APC version', 'Value' => phpversion( 'apc' ) ) ) );
-		$dataObjectSet->push( new ArrayData( array( 'Name' => 'APC Cache full count', 'Value' => $cache[ 'expunges' ] ) ) );
-		$dataObjectSet->push( new ArrayData( array( 'Name' => 'APC Memory used', 'Value' => $this->percentage( $mem_size, $mem_used ).' ('.$this->bsize( $mem_used ) . ' / ' . $this->bsize( $mem_size ).')' ) ) );
-		$dataObjectSet->push( new ArrayData( array( 'Name' => 'APC Memory fragmentation', 'Value' => $this->getAPCFragmentation( $mem ) ) ) );
-		$dataObjectSet->push( new ArrayData( array( 'Name' => 'APC Cached files', 'Value' => "$number_files ($size_files)" ) ) );
-		$dataObjectSet->push( new ArrayData( array( 'Name' => 'APC Shared memory', 'Value' => "{$mem[ 'num_seg' ]} Segment(s) with $seg_size {$cache[ 'memory_type' ]} memory, {$cache[ 'locking_type' ]} locking" ) ) );
+		$this->pushStatusData( $dataObjectSet, 'APC version', phpversion( 'apc' ) );
+		$this->pushStatusData( $dataObjectSet, 'APC Cache full count', $cache[ 'expunges' ] );
+		$this->pushStatusData( $dataObjectSet, 'APC Memory used', $this->percentage( $mem_size, $mem_used ).' ('.$this->bsize( $mem_used ) . ' / ' . $this->bsize( $mem_size ).')' );
+		$this->pushStatusData( $dataObjectSet, 'APC Memory fragmentation', $this->getAPCFragmentation( $mem ) );
+		$this->pushStatusData( $dataObjectSet, 'APC Cached files (size of files)', $number_files.' ('.$size_files.')' );
+		$this->pushStatusData( $dataObjectSet, 'APC Shared memory', $mem[ 'num_seg' ].' Segment(s) with '.$seg_size.' '.$cache[ 'memory_type' ].' memory, '.$cache[ 'locking_type' ].' locking' );
 		return $dataObjectSet;
 	}
-
+	
 	/**
 	 * Get the fragmentation of the apc memory
 	 *
@@ -88,5 +88,16 @@ class APCStatusReport extends ServerHealthReport {
 			$frag = "0%";
 		}
 		return $frag;
+	}
+	
+	/**
+	 * Small helper method to cleanup the code
+	 *
+	 * @param DataObjectSet $dataObjectSet
+	 * @param string $name
+	 * @param string $value 
+	 */
+	private function pushStatusData( $dataObjectSet, $name, $value ) {
+		$dataObjectSet->push( new ArrayData( array( 'Name' => $name, 'Value' => $value ) ) );
 	}
 }
