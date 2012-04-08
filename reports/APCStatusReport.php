@@ -32,14 +32,14 @@ class APCStatusReport extends ServerHealthReport {
 
 	/**
 	 * 
-	 * Will return the DataObjectset containing the Status of APC
+	 * Will return the ArrayList containing the Status of APC
 	 *
-	 * @return DataObjectSet 
+	 * @return ArrayList
 	 */
 	public function getStatus() {
-		$dataObjectSet = new DataObjectSet();
+		$list = new ArrayList();
 		if( !function_exists( 'apc_cache_info' ) || !($cache = @apc_cache_info( $cache_mode )) ) {
-			$dataObjectSet->push( new ArrayData( array( 'Name' => 'APC version', 'Value' => 'No cache info available. APC does not appear to be running.' ) ) );
+			$list->push( new ArrayData( array( 'Name' => 'APC version', 'Value' => 'No cache info available. APC does not appear to be running.' ) ) );
 			return;
 		}
 
@@ -51,13 +51,13 @@ class APCStatusReport extends ServerHealthReport {
 		$number_files = $cache[ 'num_entries' ];
 		$size_files = $this->bsize( $cache[ 'mem_size' ] );
 
-		$this->pushStatusData( $dataObjectSet, 'APC version', phpversion( 'apc' ) );
-		$this->pushStatusData( $dataObjectSet, 'APC Cache full count', $cache[ 'expunges' ] );
-		$this->pushStatusData( $dataObjectSet, 'APC Memory used', $this->percentage( $mem_size, $mem_used ).' ('.$this->bsize( $mem_used ) . ' / ' . $this->bsize( $mem_size ).')' );
-		$this->pushStatusData( $dataObjectSet, 'APC Memory fragmentation', $this->getAPCFragmentation( $mem ) );
-		$this->pushStatusData( $dataObjectSet, 'APC Cached files (size of files)', $number_files.' ('.$size_files.')' );
-		$this->pushStatusData( $dataObjectSet, 'APC Shared memory', $mem[ 'num_seg' ].' Segment(s) with '.$seg_size.' '.$cache[ 'memory_type' ].' memory, '.$cache[ 'locking_type' ].' locking' );
-		return $dataObjectSet;
+		$this->pushStatusData( $list, 'APC version', phpversion( 'apc' ) );
+		$this->pushStatusData( $list, 'APC Cache full count', $cache[ 'expunges' ] );
+		$this->pushStatusData( $list, 'APC Memory used', $this->percentage( $mem_size, $mem_used ).' ('.$this->bsize( $mem_used ) . ' / ' . $this->bsize( $mem_size ).')' );
+		$this->pushStatusData( $list, 'APC Memory fragmentation', $this->getAPCFragmentation( $mem ) );
+		$this->pushStatusData( $list, 'APC Cached files (size of files)', $number_files.' ('.$size_files.')' );
+		$this->pushStatusData( $list, 'APC Shared memory', $mem[ 'num_seg' ].' Segment(s) with '.$seg_size.' '.$cache[ 'memory_type' ].' memory, '.$cache[ 'locking_type' ].' locking' );
+		return $list;
 	}
 	
 	/**
@@ -93,11 +93,19 @@ class APCStatusReport extends ServerHealthReport {
 	/**
 	 * Small helper method to cleanup the code
 	 *
-	 * @param DataObjectSet $dataObjectSet
+	 * @param SS_List $list
 	 * @param string $name
 	 * @param string $value 
 	 */
-	private function pushStatusData( $dataObjectSet, $name, $value ) {
-		$dataObjectSet->push( new ArrayData( array( 'Name' => $name, 'Value' => $value ) ) );
+	private function pushStatusData(SS_List $list, $name, $value ) {
+		$list->push( new ArrayData( array( 'Name' => $name, 'Value' => $value ) ) );
+	}
+
+	/**
+	 * @todo remove when the report admin has been fixed
+	 * @return void
+	 */
+	public function forTemplate(){
+		return;
 	}
 }

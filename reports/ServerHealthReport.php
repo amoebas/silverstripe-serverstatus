@@ -9,10 +9,10 @@ abstract class ServerHealthReport extends SS_Report {
 
 	/**
 	 *
-	 * @return FieldSet
+	 * @return FieldList
 	 */
 	public function getCMSFields() {
-		$fields = new FieldSet(
+		$fields = new FieldList(
 			new LiteralField(
 				'ReportTitle',
 				 "<h3>{$this->title()}</h3>"

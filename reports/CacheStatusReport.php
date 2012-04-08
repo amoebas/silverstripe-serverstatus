@@ -19,7 +19,7 @@ class CacheStatusReport extends ServerHealthReport {
 
 	/**
 	 *
-	 * @return FieldSet
+	 * @return FieldList
 	 */
 	public function getReportFields(){
 		
@@ -54,7 +54,15 @@ class CacheStatusReport extends ServerHealthReport {
 			unset( $cacheInstance );
 		}
 
-		$fields = new FieldSet( new TabSet( 'Root', $tab ) );
+		$fields = new FieldList( new TabSet( 'Root', $tab ) );
 		return $fields;
+	}
+
+	/**
+	 * @todo remove when the report admin has been fixed
+	 * @return void
+	 */
+	public function forTemplate(){
+		return;
 	}
 }

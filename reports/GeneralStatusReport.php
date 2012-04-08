@@ -33,20 +33,20 @@ class GeneralStatusReport extends ServerHealthReport {
 	 * Does the brute work of return a 'fake' dataobject set with the actual data
 	 * displayed in the report
 	 * 
-	 * @return DataObjectSet
+	 * @return ArrayList
 	 */
 	public function getStatus() {
-		$dataObjectSet = new DataObjectSet();
+		$list = new ArrayList();
 		if( !empty( $_SERVER[ 'SERVER_NAME' ] ) ) {
 			$host = ( getenv( 'HOSTNAME' ) )?' (' . getenv( 'HOSTNAME' ) . ')':'';
-			$dataObjectSet->push( new ArrayData( array( 'Name' => 'Hostname', 'Value' => $_SERVER[ 'SERVER_NAME' ] . $host ) ) );
+			$list->push( new ArrayData( array( 'Name' => 'Hostname', 'Value' => $_SERVER[ 'SERVER_NAME' ] . $host ) ) );
 		}
 		if( !empty( $_SERVER[ 'SERVER_SOFTWARE' ] ) ) {
-			$dataObjectSet->push( new ArrayData( array( 'Name' => 'Server software', 'Value' => $_SERVER[ 'SERVER_SOFTWARE' ] ) ) );
+			$list->push( new ArrayData( array( 'Name' => 'Server software', 'Value' => $_SERVER[ 'SERVER_SOFTWARE' ] ) ) );
 		}
-		$dataObjectSet->push( new ArrayData( array( 'Name' => 'PHP version', 'Value' => phpversion() ) ) );
-		$dataObjectSet->push( new ArrayData( array( 'Name' => 'Serverload', 'Value' => $this->getServerLoad() ) ) );
-		return $dataObjectSet;
+		$list->push( new ArrayData( array( 'Name' => 'PHP version', 'Value' => phpversion() ) ) );
+		$list->push( new ArrayData( array( 'Name' => 'Serverload', 'Value' => $this->getServerLoad() ) ) );
+		return $list;
 	}
 
 	/**
@@ -92,4 +92,11 @@ class GeneralStatusReport extends ServerHealthReport {
 		}
 	}
 
+	/**
+	 * @todo remove when the report admin has been fixed
+	 * @return void
+	 */
+	public function forTemplate(){
+		return;
+	}
 }
