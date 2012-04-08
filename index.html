@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Silverstripe-serverstatus by amoebas</title>
+    <title>SilverStripe ServerStatus by amoebas</title>
     
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
@@ -15,7 +15,7 @@
   <body>
     <div class="wrapper">
       <header>
-        <h1>Silverstripe-serverstatus</h1>
+        <h1>SilverStripe ServerStatus</h1>
         <p>Show the server status for you silverstripe installation</p>
         <p class="view"><a href="https://github.com/amoebas/silverstripe-serverstatus">View the Project on GitHub <small>amoebas/silverstripe-serverstatus</small></a></p>
         <ul>
@@ -25,45 +25,76 @@
         </ul>
       </header>
       <section>
-        <p>The </p>
 
-<p>Description:</p>
+		  <h2>Intro</h2>
+<p>This SilverStripe modules is meant to give a site owner a brief overlook at how well the backend is feeling.</p>
 
 <p>With this module you get three new reports in the admin &gt; reports in silverstripe</p>
 
-<p>This is an example of what kind of data this module reports:</p>
+<h2>Example of information</h2>
 
-<p>Server health - General</p>
+<p>This is an example of what kind of information this module reports:</p>
 
-<p>Hostname dev.stojg.se (stig.lindqvist)
-Server software: Apache/2.2.3 (CentOS)
-PHP version:5.2.17
-Serverload: 0.02 0.06 0.07</p>
+<h3>Server health - General</h3>
+<dl>
+	<dt>Hostname</dt><dd>dev.stojg.se (stig.lindqvist)</dd>
+	<dt>Server software</dt><dd>Apache/2.2.3 (CentOS)</dd>
+	<dt>PHP version</dt><dd>5.2.17</dd>
+	<dt>Serverload</dt><dd>0.02 / 0.06 / 0.07</dd>
+	
+</dl>
 
-<p>Server health - APC</p>
+<h3>Server health - APC</h3>
 
-<p>APC version: 3.1.6
-APC Cache full count: 77
-APC Memory used: 75% (24.1 MB / 32.0 MB)
-APC Memory fragmentation: 32.88% (2.6 MB out of 7.9 MB in 8 fragments)
-APC Cached files: 663 (24.0 MB)
-APC Shared memory: 1 Segment(s) with 32.0 MB mmap memory, pthread mutex locking</p>
 
-<p>Server health - Cache</p>
+<dl>
+	<dt>APC version</dt><dd>3.1.6</dd>
+	<dt>APC Cache full count</dt><dd>77</dd>
+	<dt>APC Memory used</dt><dd>75% (24.1 MB / 32.0 MB)</dd>
+	<dt>APC Memory fragmentation</dt><dd>32.88% (2.6 MB out of 7.9 MB in 8 fragments)</dd>
+	<dt>APC Cached files</dt><dd>663 (24.0 MB)</dd>
+	<dt>APC Shared memory</dt><dd>1 Segment(s) with 32.0 MB mmap memory, pthread mutex locking</dd>
+	<dt></dt><dd></dd>
+</dl>
 
-<p>default Backend: Zend_Cache_Backend_File</p>
 
-<p>Cache space used: 88%
-Count of entries: 422</p>
+<h3>Server health - Cache</h3>
 
-<p>primary_memcached Backend: Zend_Cache_Backend_Memcached</p>
+<h4>default</h4>
+<dl>
+		<dt>Backend</dt><dd>Zend_Cache_Backend_File</dd>
+		<dt>Cache space used</dt><dd>75%</dd>
+		<dt>Count of entries</dt><dd>395</dd>
+</dl>
 
-<p>Cache space used: 0%
-Count of entries: (none)</p>
+<h4>aggregatestore</h4>
+<dl>
+		<dt>Backend</dt><dd>Zend_Cache_Backend_File</dd>
+		<dt>Cache space used</dt><dd>75%</dd>
+		<dt>Count of entries</dt><dd>(none)</dd>
+</dl>
 
-<p>Installation:</p>
+<h2>Installation:</h2>
 
-<p>1) Just dump the folder serverstatus into the root folder of your silverstripe installation</p>
+<ol>
+<li>Download or clone the module into the root document folder of your SilverStripe project.</li>
+<li>Decompress and extract the module.</li>
+<li> Run the "dev/build".</li>
+<li> Profit.</li>
+</ol>
+
+<h2>Command line installation</h2>
+<code><pre>
+wget https://github.com/downloads/amoebas/silverstripe-serverstatus/serverstatus.tar.gz
+tar xvf serverstatus.tar.gz
+./sapphire/sake dev/build
+</pre>
+</code>
+
+<h2>Usage</h2>
+
+<p>Log in to the admin and go to the report section.</p>
+
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/amoebas">amoebas</a></p>
