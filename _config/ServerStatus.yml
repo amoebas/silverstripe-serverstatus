@@ -1,0 +1,6 @@
+name: ServerStatus
+---
+ServerStatus:
+   registered_reports:
+     ReportAdmin:
+       GeneralStatusReport: -20
