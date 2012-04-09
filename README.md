@@ -1,17 +1,21 @@
-Description:
+# Intro
+
+This SilverStripe modules is meant to give a site owner a brief overlook at how well the backend is feeling.
 
 With this module you get three new reports in the admin > reports in silverstripe
 
-This is an example of what kind of data this module reports:
+# Example of information
 
-Server health - General
+This is an example of what kind of information this module reports:
+
+## Server health - General
 
 Hostname dev.stojg.se (stig.lindqvist)
 Server software: Apache/2.2.3 (CentOS)
 PHP version:5.2.17
 Serverload: 0.02 0.06 0.07
 
-Server health - APC
+## Server health - APC
 
 APC version: 3.1.6
 APC Cache full count: 77
@@ -20,7 +24,7 @@ APC Memory fragmentation: 32.88% (2.6 MB out of 7.9 MB in 8 fragments)
 APC Cached files: 663 (24.0 MB)
 APC Shared memory: 1 Segment(s) with 32.0 MB mmap memory, pthread mutex locking
 
-Server health - Cache
+## Server health - Cache
 
 default Backend: Zend_Cache_Backend_File
 
@@ -32,6 +36,12 @@ primary_memcached Backend: Zend_Cache_Backend_Memcached
 Cache space used: 0%
 Count of entries: (none)
 
-Installation:
+# Installation:
 
-1) Just dump the folder serverstatus into the root folder of your silverstripe installation
+ - Download or clone the module into the root document folder of your SilverStripe project.
+ - Decompress and extract the module.
+ - Run the "dev/build".
+
+# References:
+- https://github.com/amoebas/silverstripe-serverstatus
+- http://amoebas.github.com/silverstripe-serverstatus/
