@@ -7,11 +7,9 @@
  */
 class APCStatusReport extends ServerHealthReport {
 
-	/**
-	 *
-	 * @var string
-	 */
-	protected $title = "Server health - APC";
+	public function title() {
+		return _t('StatusReport.APCReport',"Server health - APC");
+	}
 
 	/**
 	 *
@@ -99,7 +97,11 @@ class APCStatusReport extends ServerHealthReport {
 	 * @param string $value 
 	 */
 	private function pushStatusData(SS_List $list, $name, $value) {
-		$list->push(new ArrayData(array('Name' => $name, 'Value' => $value)));
+		$list->push(new ReportData(array('Name' => $name, 'Value' => $value, 'CanView' => true)));
+	}
+
+	public function sourcerecords() {
+		return $this->getStatus();
 	}
 
 	/**
@@ -109,5 +111,4 @@ class APCStatusReport extends ServerHealthReport {
 	public function forTemplate() {
 		return;
 	}
-
 }

@@ -6,13 +6,15 @@
  *
  * @package serverstatus
  */
-abstract class ServerHealthReport extends SS_Report {
+ class ServerHealthReport extends SS_Report {
 
 	/**
 	 *
 	 * @return Tab
 	 */
-	abstract public function getReportFields();
+	public function getReportFields() {
+		
+	}
 	
 	/**
 	 *
@@ -94,4 +96,23 @@ abstract class ServerHealthReport extends SS_Report {
 		return $str;
 	}
 
+	public function columns() {
+		$fields = array(
+			"Name" => array(
+				"title" => _t('StatusReport.Name', "Name")
+			),
+			"Value" => array(
+				"title" => _t('StatusReport.Value', "Value")
+			)
+		);
+		return $fields;
+	}
+}
+
+
+class ReportData extends ArrayData {
+
+	public function canView($member=null) {
+		return true;
+	}
 }

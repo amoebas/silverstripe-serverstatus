@@ -29,23 +29,22 @@ class CacheStatusReport extends ServerHealthReport {
 			require_once 'Zend/Cache.php';
 		}
 
-		$tab = new Tab('Cache');
+		$list = new ArrayList();
 
 		foreach(CacheInvestigator::get_backends() as $for => $backend) {
 
 			$cacheInstance = Zend_Cache::factory('Output', $backend[0], array(), $backend[1]);
 
-			$tab->push(new HeaderField($for, $for, 4));
-			$tab->push(new ReadonlyField($for . 'Backendname', 'Backend', get_class($cacheInstance->getBackend())));
+			$this->pushStatusData($list, $for . '', get_class($cacheInstance->getBackend()));
 
 			try {
 				$percentage = $cacheInstance->getFillingPercentage();
 			} catch(Zend_Cache_Exception $e) {
 				$percentage = $e->getMessage();
 			}
-			$tab->push(new ReadonlyField($for . 'CacheUsed', 'Cache space used', $percentage . '%'));
+			$this->pushStatusData($list, 'Cache space used', $percentage . '%');
 			$tags = $cacheInstance->getIds();
-			$tab->push(new ReadonlyField($for . 'AmountOfIds', 'Count of entries', count($tags)));
+			$this->pushStatusData($list, 'Count of entries', count($tags));
 
 			/* Not implemented yet due to uncertianly how to show individual cache entries
 			  $i=0;
@@ -56,8 +55,22 @@ class CacheStatusReport extends ServerHealthReport {
 			unset($cacheInstance);
 		}
 
-		$fields = new FieldList(new TabSet('Root', $tab));
-		return $fields;
+		return $list;
+	}
+
+	/**
+	 * Small helper method to cleanup the code
+	 *
+	 * @param SS_List $list
+	 * @param string $name
+	 * @param string $value
+	 */
+	private function pushStatusData(SS_List $list, $name, $value) {
+		$list->push(new ReportData(array('Name' => $name, 'Value' => $value, 'CanView' => true)));
+	}
+
+	public function sourcerecords() {
+		return $this->getReportFields();
 	}
 
 	/**
